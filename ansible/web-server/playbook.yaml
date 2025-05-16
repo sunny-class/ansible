@@ -1,0 +1,33 @@
+- name: Configure Apache Web Servers with Handlers
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Ensure document root exists
+      file:
+        path: "{{ document_root }}"
+        state: directory
+
+    - name: Deploy index.html from template
+      template:
+        src: index.html.j2
+        dest: "{{ document_root }}/index.html"
+
+    - name: Set Apache to listen on the desired port
+      lineinfile:
+        path: /etc/apache2/ports.conf
+        regexp: '^Listen '
+        line: "Listen {{ http_port }}"
+      notify: Restart Apache
+
+  handlers:
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted

@@ -1,0 +1,27 @@
+- name: Install multiple packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - curl
+    - git
+    - htop
+
+
+- name: Create multiple users
+  user:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - alice
+    - bob
+    - charlie
+
+
+- name: Create users with specific shells
+  user:
+    name: "{{ item.name }}"
+    shell: "{{ item.shell }}"
+  loop:
+    - { name: "alice", shell: "/bin/bash" }
+    - { name: "bob", shell: "/bin/zsh" }

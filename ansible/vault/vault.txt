@@ -1,0 +1,24 @@
+ansible-vault create secret.yml					Creates and encrypts a new file
+ansible-vault edit secret.yml	        				Opens encrypted file in editor
+ansible-vault view secret.yml					View contents without editing
+ansible-vault encrypt file.yml					Encrypts an existing file
+ansible-vault decrypt file.yml					Decrypts a file
+ansible-playbook playbook.yml --ask-vault-pass		Runs a playbook that uses Vault
+
+
+ansible-playbook -i inventory site.yml --ask-vault-pass
+
+ansible-playbook -i inventory site.yml --vault-password-file vault_pass.txt
+
+mysql -u root -p
+
+-- Check MySQL status
+status;
+
+-- List databases
+SHOW DATABASES;
+
+-- Create a new database
+CREATE DATABASE test_db;
+
+

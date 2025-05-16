@@ -1,0 +1,30 @@
+- name: Install Apache only on Debian
+  apt:
+    name: apache2
+    state: present
+  when: ansible_os_family == "Debian"
+
+
+- name: Only run on server1
+  debug:
+    msg: "This is server1"
+  when: inventory_hostname == "server1"
+
+
+- name: Run only on Ubuntu 22.04
+  debug:
+    msg: "This is Ubuntu 22.04"
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "22.04"
+
+
+- name: Install nginx if Debian or Ubuntu
+  apt:
+    name: nginx
+    state: present
+  when: ansible_distribution in ["Debian", "Ubuntu"]
+
+
+- name: Skip on localhost
+  debug:
+    msg: "Not running on localhost"
+  when: inventory_hostname != "localhost"

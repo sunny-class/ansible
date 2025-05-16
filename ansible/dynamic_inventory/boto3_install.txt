@@ -1,0 +1,12 @@
+sudo apt install python3-venv -y   # Only needed once
+
+python3 -m venv ~/.venvs/ansible-env
+
+source ~/.venvs/ansible-env/bin/activate
+
+pip install boto3
+
+python -c "import boto3; print(boto3.__version__)"
+
+
+ansible-inventory -i aws_ec2.yml --list

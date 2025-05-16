@@ -1,0 +1,22 @@
+- name: Install and Secure MySQL with Vault
+  hosts: db
+  become: true  
+
+  vars_files:
+    - vault.yml  
+
+  tasks:
+    - name: Install MySQL server
+      apt:
+        name: mysql-server
+        state: present
+        update_cache: true
+
+    - name: Ensure MySQL root password is set
+      mysql_user:
+        name: root
+        host: localhost
+        password: "{{ mysql_root_password }}"  
+        login_unix_socket: /run/mysqld/mysqld.sock  
+        check_implicit_admin: yes  
+        state: present  
