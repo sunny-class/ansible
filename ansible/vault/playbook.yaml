@@ -1,22 +1,14 @@
-- name: Install and Secure MySQL with Vault
-  hosts: db
-  become: true  
-
+---
+- name: Securely create a Linux user with Vault password
+  hosts: all
+  become: yes
   vars_files:
-    - vault.yml  
+    - user_secrets.yml
 
   tasks:
-    - name: Install MySQL server
-      apt:
-        name: mysql-server
+    - name: Create a user with a Vault-encrypted password
+      user:
+        name: "{{ secure_user }}"
+        password: "{{ secure_password }}"
+        shell: /bin/bash
         state: present
-        update_cache: true
-
-    - name: Ensure MySQL root password is set
-      mysql_user:
-        name: root
-        host: localhost
-        password: "{{ mysql_root_password }}"  
-        login_unix_socket: /run/mysqld/mysqld.sock  
-        check_implicit_admin: yes  
-        state: present  

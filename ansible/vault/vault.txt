@@ -10,15 +10,5 @@ ansible-playbook -i inventory site.yml --ask-vault-pass
 
 ansible-playbook -i inventory site.yml --vault-password-file vault_pass.txt
 
-mysql -u root -p
-
--- Check MySQL status
-status;
-
--- List databases
-SHOW DATABASES;
-
--- Create a new database
-CREATE DATABASE test_db;
-
+mkpasswd --method=SHA-512
 
